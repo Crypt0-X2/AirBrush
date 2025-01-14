@@ -1,26 +1,74 @@
-# Virtual Whiteboard
-Using Python, Computer Vision and Google MediaPipe Libraries
-Link to the toolkit design - [Canva Virtual Whiteboard UI](https://www.canva.com/design/DAEdq1bEIA4/q8qvATq6UcUWav4u6Moneg/view?utm_content=DAEdq1bEIA4&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton)
+# AirCanvas: Virtual Drawing with Hand Gestures
 
-## Installation Guide
+## Overview
+AirCanvas is a computer vision-based drawing application that allows users to draw in the air using hand gestures. The application tracks hand movements through a webcam and converts them into digital drawings in real-time. It also features handwriting recognition capabilities to convert drawings into digital text.
 
-### Clone GitHub Repository
- Open Command Prompt -->
-`git clone https://
+## Features
+- Real-time hand gesture tracking
+- Multiple color options
+- Eraser tool
+- Clear canvas functionality
+- Save drawings as images
+- Handwriting recognition
+- Keyboard shortcuts
 
-### Install Required Packages and Libraries
+## Requirements
+- Python 3.8+
+- Webcam
+- Required packages listed in `requirements.txt`
+
+## Installation
+1. Clone the repository:
 ```
-pip upgrade --user pip
-pip install opencv-python
-pip install numpy
-pip install mediapipe
+
+2. Create a virtual environment (recommended):
 ```
 
-### Run Project
-Open project from PyCharm or suitable IDE and run the VirtualPainter.py file or Open Command Prompt and Run `python VirtualPainter.py`
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-## Guide
-![guide-img](./guide.png)
+## Usage
+1. Run the main application:
+```bash
+python VirtualPainter.py
+```
 
-## Demo 
-[![Virtual Whiteboard](https://res.cloudinary.com/marcomontalbano/image/upload/v1620299484/video_to_markdown/images/youtube--vF5HnA5sO6c-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/vF5HnA5sO6c "Virtual Whiteboard")
+2. Hand Gestures:
+- Index finger up: Drawing mode
+- Index + Middle fingers up: Selection mode
+- All fingers up: Clear canvas
+
+3. Keyboard Shortcuts:
+- 'S': Save current drawing
+- 'T': Recognize and save text from drawing
+- 'Q': Quit application
+
+## Project Structure
+```
+AirCanvas/
+├── HandTrackingModule.py    # Hand tracking implementation
+├── VirtualPainter.py        # Main application
+├── UI/                      # UI assets
+│   ├── header1.png         # Red color tool
+│   ├── header2.png         # Blue color tool
+│   ├── header3.png         # Green color tool
+│   ├── header4.png         # Yellow color tool
+│   └── header5.png         # Eraser tool
+├── saved_drawings/          # Directory for saved drawings
+├── requirements.txt         # Project dependencies
+└── README.md               # Project documentation
+```
+
+## Dependencies
+See `requirements.txt` for detailed dependencies.
+
+## Contributing
+Feel free to fork the project and submit pull requests for any improvements.
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+```
+
+</rewritten_file>

@@ -2,6 +2,9 @@ import cv2
 import numpy as np
 import os
 import HandTrackingModule as htm
+from datetime import datetime
+import easyocr # for text recognition
+import keyboard # for keyboard shortcuts
 
 # Define the Size of the Brush and Eraser Thickness
 brushThickness = 15
@@ -27,6 +30,35 @@ xp, yp = 0, 0
 
 # Create a Canva to Draw
 imgCanvas = np.zeros((720, 1280, 3), np.uint8)
+
+# Add these after your existing initializations
+reader = easyocr.Reader(['en']) # Initialize EasyOCR
+save_directory = "saved_drawings"
+if not os.path.exists(save_directory):
+    os.makedirs(save_directory)
+
+# Add these functions
+def save_canvas(canvas):
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{save_directory}/drawing_{timestamp}.png"
+    cv2.imwrite(filename, canvas)
+    return filename
+
+def recognize_text(image):
+    # Convert to grayscale if not already
+    if len(image.shape) == 3:
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = image
+    
+    # Improve image quality for text recognition
+    gray = cv2.GaussianBlur(gray, (3,3), 0)
+    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    
+    # Perform text recognition
+    results = reader.readtext(binary)
+    recognized_text = ' '.join([text[1] for text in results])
+    return recognized_text
 
 while True:
 
@@ -114,3 +146,15 @@ while True:
     # cv2.imshow("Canvas", imgCanvas)
     # cv2.imshow("Inv", imgInv)
     cv2.waitKey(1)
+
+    # Add these keyboard shortcuts
+    if keyboard.is_pressed('s'):  # Press 's' to save
+        saved_file = save_canvas(imgCanvas)
+        print(f"Saved drawing to {saved_file}")
+    
+    if keyboard.is_pressed('t'):  # Press 't' to recognize text
+        recognized_text = recognize_text(imgCanvas)
+        print(f"Recognized Text: {recognized_text}")
+        # Optionally save the text to a file
+        with open(f"{save_directory}/recognized_text_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt", 'w') as f:
+            f.write(recognized_text)
